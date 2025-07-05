@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Before & After: Inventory Data Cleanup</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0.75rem 1rem;
+      background: linear-gradient(to right, #f0f4f8, #ffffff);
+      color: #1f2937;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    h1 {
+      margin-top: 0.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+      font-weight: 700;
+      text-align: center;
+      color: #0f172a;
+      background: linear-gradient(to right, #059669, #10b981);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .container-wrapper {
+      width: 100%;
+      max-width: 1200px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .container {
+      display: flex;
+      gap: 2rem;
+      align-items: stretch;
+      justify-content: center;
+      height: 100%;
+      flex-wrap: nowrap;
+    }
+
+    .data-block {
+      flex: 1 1 48%;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      transition: transform 0.3s ease;
+      min-width: 320px;
+      overflow: hidden;
+    }
+
+    .data-block:hover {
+      transform: translateY(-4px);
+    }
+
+    .data-block a img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .data-block a img:hover {
+      transform: scale(1.02);
+    }
+
+    .btn {
+      background: linear-gradient(to right, #10b981, #34d399);
+      color: white;
+      padding: 0.65rem 1.4rem;
+      border-radius: 10px;
+      font-weight: 600;
+      text-decoration: none;
+      margin-top: 1rem;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn:hover {
+      background: linear-gradient(to right, #059669, #10b981);
+      transform: translateY(-2px);
+    }
+
+    .explanation {
+      background: #f9fafb;
+      border-radius: 10px;
+      padding: 1rem;
+      font-size: 0.95rem;
+      color: #374151;
+      width: 100%;
+    }
+
+    .card-heading {
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      font-size: 1.05rem;
+      color: #1e293b;
+    }
+
+    .explanation ul {
+      padding-left: 1.25rem;
+      margin: 0;
+    }
+
+    .explanation li {
+      margin-bottom: 0.5rem;
+    }
+
+    .code-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      margin-top: 1rem;
+    }
+
+    .code-links a {
+      background: linear-gradient(90deg, #0f172a, #1e293b);
+      color: white;
+      padding: 0.65rem 1.4rem;
+      border-radius: 10px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.3s ease;
+    }
+
+    .code-links a:hover {
+      background: linear-gradient(90deg, #1e293b, #334155);
+      transform: scale(1.04);
+    }
+
+    .code-links a.highlight {
+      background: linear-gradient(90deg, #064e3b, #065f46);
+      color: #fff;
+      box-shadow: 0 6px 14px rgba(5, 150, 105, 0.4);
+    }
+
+    .code-links a.highlight:hover {
+      background: linear-gradient(90deg, #022c22, #064e3b);
+      transform: translateY(-2px) scale(1.03);
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+        overflow: auto;
+      }
+
+      body {
+        overflow: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Before &amp; After: Inventory Data Cleanup</h1>
+
+  <div class="container-wrapper">
+    <div class="container">
+      <div class="data-block">
+        <a href="Source.png" target="_blank">
+          <img src="Source.png" alt="Raw Inventory Data" />
+        </a>
+        <a href="inventorySource.csv" download class="btn">Download Source Data</a>
+        <div class="explanation">
+          <div class="card-heading">Issues in Source Dataset:</div>
+          <ul>
+            <li>Missing or incorrect item names</li>
+            <li>Batch number duplication</li>
+            <li>Negative quantities or sales</li>
+            <li>NULLs in dates and store names</li>
+            <li>Spelling inconsistencies in items & locations</li>
+            <li>Incorrect date entries (e.g., 0000-00-00)</li>
+            <li>Purchase date after expiry date</li>
+            <li>Sold > quantity, returned > sold</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="data-block">
+        <a href="Cleaned.png" target="_blank">
+          <img src="Cleaned.png" alt="Cleaned Inventory Data" />
+        </a>
+        <a href="InventoryCleaned.csv" download class="btn">Download Cleaned Data</a>
+        <div class="explanation">
+          <div class="card-heading">Cleaning & Transformation Highlights:</div>
+          <ul>
+            <li>Loaded via <code>LOAD DATA</code> from CSV</li>
+            <li>Invalid entries removed with filters</li>
+            <li>Fixed spelling using <code>UPDATE CASE</code></li>
+            <li>Trimmed and normalized strings</li>
+            <li>Fixed invalid/NULL dates</li>
+            <li>De-duplicated using <code>ROW_NUMBER()</code> CTE</li>
+            <li>Standardized store names</li>
+            <li>Removed logically invalid sales/returns</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="code-links">
+    <a href="https://github.com/yashveerdalal/Inventory-Extract/blob/main/inventoryScript.sql" target="_blank">📂 View SQL Script</a>
+    
+    <a href="https://github.com/yashveerdalal/Inventory-Extract" target="_blank">🔗 GitHub Repository</a>
+     <a href="https://yashveerdalal.github.io/InventoryManagement-Visualisation/" target="_blank">View dashboard 📊</a>
+    <a href="https://yashveerdalal.github.io/Inventory-EDA/" target="_blank" class="highlight">➤ Continue with EDA</a>
+  </div>
+</body>
+</html>
